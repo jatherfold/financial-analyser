@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 # Basic class with example
 
 class Account:
@@ -22,17 +25,9 @@ class Account:
         elif period == 'months':
             self.Balance = self.Balance*(1 + intRate/12)**timeSteps
         else:    
-            raise Exception('"period" should take the value "years" or \
-            "months". The value of "period" was: ' + str(period))
+            raise Exception('"period" should take the value "years" or' + \
+            '"months". The value of "period" was: "' + str(period) + '".')
             
     def printDetails(self):
         print('Current Balance: R%.2f' % self.Balance +'\n'\
         'Interest Rate: ' + str(self.InterestRate * 100) + '% \n \n')
-
-savings = Account(0)
-savings.deposit(10000)
-savings.printDetails()
-savings.changeInterestRate(3.75)
-savings.printDetails()
-savings.elapseTime(3,'month')
-savings.printDetails()
