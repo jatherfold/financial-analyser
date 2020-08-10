@@ -10,10 +10,16 @@ Example Script for Account Class
 
 from Analyser import Account
 
-savings = Account(0)
-savings.deposit(10000)
-savings.printDetails()
+#savings = Account(0)
+#savings.deposit(10000)
+#savings.printDetails()
+#savings.changeInterestRate(3.75)
+#savings.printDetails()
+#savings.elapseTime(3,'months')
+#savings.printDetails()
+
+savings = Account(70000)
 savings.changeInterestRate(3.75)
 savings.printDetails()
-savings.elapseTime(3,'months')
+savings.annuityFV(8000, 24)
 savings.printDetails()
