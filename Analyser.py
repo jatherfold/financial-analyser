@@ -7,8 +7,7 @@ class Account:
 	Income = 0
 	Balance = 0
 	Expenses = 0
-	InterestRate = 0
-	MonthlyInterest = 0
+
 	def __init__(self, balance):
 		self.Balance = balance
 	
@@ -17,32 +16,14 @@ class Account:
 	
 	def withdraw(self, amount):
 		self.Balance -= amount
-	
-	def changeInterestRate(self, newInterest):
-		self.InterestRate = newInterest/100
-		self.MonthlyInterest = self.InterestRate/12 # Assume compounding is monthly
-	
-	def elapseTime(self, timeSteps, period):
-        
-		if period == 'years':
-			self.Balance = self.Balance*(1 + self.MonthlyInterest)**(timeSteps*12)
-		elif period == 'months':
-			self.Balance = self.Balance*(1 + self.MonthlyInterest)**timeSteps
-		else:    
-			raise Exception('"period" should take the value "years" or' + \
-			'"months". The value of "period" was: "' + str(period) + '".')
 
 	def printDetails(self):
-		print('Current Balance: R%.2f' % self.Balance +'\n'\
-		'Interest Rate: ' + str(self.InterestRate * 100) + '% \n \n')
+		print('Current Balance: R%.2f' % self.Balance + '\n' \
+		'Total Monthly Income: R%.2f' % self.Income + '\n' \
+		'Total Monthly Expenses: R%.2f' % self.Expenses + '\n')
 	
-	def annuityFV(self, deposit, term):
-		annuityValue = deposit*((1 + self.MonthlyInterest)**term -1)/(self.MonthlyInterest)
-		self.Balance = self.Balance*(1 + self.MonthlyInterest)**term + annuityValue
-
-	def annuityPV(self, loanAmt, term):
-		self.Balance += loanAmt
-		self.Expenses += loanAmt(()/self.MonthlyInterest)
+	def elapseTime(self, months):
+		self.Balance += months*(self.Income - self.Expenses)
 
 
 class Loan:
@@ -79,3 +60,18 @@ class Loan:
 			self.NumTermsPassed += numPayments
 			self.PaidToDate += payment*numPayments
 			self.BalanceOutstanding = payment*(1-(1+self.MonthlyInterestRate)**-(self.LoanTerm - self.NumTermsPassed))/self.MonthlyInterestRate
+
+class InvestmentAccount:
+	Value = 0
+	AnnualReturnRate = 0
+	MonthlyReturnRate = 0
+	AmountInvested = 0
+	ROI = 0
+	
+	def __init__(self, initialValue, interestRate):
+		self.Value = initialValue
+		self.AnnualReturnRate = interestRate/100
+		self.MonthlyReturnRate = self.AnnualReturnRate/12
+		
+	def regularPayment(self, payment, numPayments):
+		self.Value += payment*((1 + self.MonthlyReturnRate)^numPayments - 1)/self.MonthlyReturnRate
