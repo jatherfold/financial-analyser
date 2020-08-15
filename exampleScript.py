@@ -16,5 +16,7 @@ savings.printDetails()
 savings.annuityFV(8000, 24)
 savings.printDetails()
 
-apartment = Analyser.Loan(1000000.00,6.5,20)
+apartment = Analyser.Loan(829000,10.25,20)
+apartment.printDetails()
+apartment.regularPayment(apartment.MinMonthlyPayment, 5)
 apartment.printDetails()
