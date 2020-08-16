@@ -11,6 +11,24 @@ class Account:
 	def __init__(self, balance):
 		self.Balance = balance
 	
+	def increase(self, amount, type):
+		if type == 'Income':
+			self.Income += amount
+		elif type == 'Expense':
+			self.Expenses += amount
+		else:
+			raise Exception('Invalid input "' + type + '". Expected "type" to be ' + \
+			'"Income" or "Expense".')
+	
+	def decrease(self, amount, type):
+		if type == 'Income':
+			self.Income -= amount
+		elif type == 'Expense':
+			self.Expenses -= amount
+		else:
+			raise Exception('Invalid input' + type + '. Expected "type" to be ' + \
+			'"Income" or "Expense".')
+	
 	def deposit(self, amount):
 		self.Balance += amount;
 	
@@ -61,7 +79,7 @@ class Loan:
 			self.PaidToDate += payment*numPayments
 			self.BalanceOutstanding = payment*(1-(1+self.MonthlyInterestRate)**-(self.LoanTerm - self.NumTermsPassed))/self.MonthlyInterestRate
 
-class InvestmentAccount:
+class Investment:
 	Value = 0
 	AnnualReturnRate = 0
 	MonthlyReturnRate = 0
@@ -74,4 +92,18 @@ class InvestmentAccount:
 		self.MonthlyReturnRate = self.AnnualReturnRate/12
 		
 	def regularPayment(self, payment, numPayments):
-		self.Value += payment*((1 + self.MonthlyReturnRate)^numPayments - 1)/self.MonthlyReturnRate
+		prevValue = self.Value
+		self.Value += payment*((1 + self.MonthlyReturnRate)**numPayments - 1)/self.MonthlyReturnRate
+		self.ROI += self.Value - prevValue
+		self.AmountInvested += numPayments*payment
+	
+	def elapseTime(self, months):
+		self.ROI += self.Value*((1 + self.MonthlyReturnRate)**months - 1)
+		self.Value = self.Value*(1 + self.MonthlyReturnRate)**months
+	
+	def printDetails(self):
+		print('Investment Value: R%.2f' % self.Value +'\n' + \
+		'Return Rate: ' + str(self.AnnualReturnRate*100) + '% \n' + \
+		'Amount Invested: R%.2f' % self.AmountInvested + '\n' + \
+		'Return on Investment: R%.2f' % self.ROI + '\n')
+		

@@ -10,13 +10,20 @@ Example Script for Account Class
 
 import Analyser
 
-savings = Analyser.Account(70000)
-savings.changeInterestRate(3.75)
-savings.printDetails()
-savings.annuityFV(8000, 24)
-savings.printDetails()
+current = Analyser.Account(10000)
+current.increase(25000, 'Income')
+current.increase(5000, 'Expense')
+current.printDetails()
+current.elapseTime(5)
+current.printDetails()
 
 apartment = Analyser.Loan(829000,10.25,20)
 apartment.printDetails()
 apartment.regularPayment(apartment.MinMonthlyPayment, 5)
 apartment.printDetails()
+
+savings = Analyser.Investment(30000, 3.75)
+savings.regularPayment(5000,10)
+savings.printDetails()
+savings.elapseTime(5)
+savings.printDetails()
